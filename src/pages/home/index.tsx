@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import "./style.css";
 import {LivroCard} from "../../book/components/livroCard"
 import { BookModel } from "models/book.model";
+import { Link, useNavigate } from "react-router-dom";
 
 export function HomePage() {
   const [Livros, setLivros] = useState([]);
@@ -21,15 +22,13 @@ export function HomePage() {
 
   return (
     <div className="livros__container">
-      <div className="header">
+      <div className="livros__header">
       <h1>Livros Story</h1>
-      <button>Adicionar livro</button>
+      <Link to="/novo-livro" className="livros__button__nagivate">Home</Link>
       </div>
     <div className="livros__content">
          {Livros.map((livro: BookModel) => {
-          return (
-           <LivroCard livro={livro} key={livro.id}/>
-          )
+          return (<LivroCard livro={livro} key={livro.id}/>)
         })}
     </div>
     </div>
