@@ -22,6 +22,8 @@ export function FormComp() {
   const [loading, setloading] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const { register, handleSubmit, formState: { errors }, reset} = useForm<MyInputTypes>();
+  const [title, setTitle] = useState("");
+  const [message, setMessage] = useState("");
 
   function handleClose() {
     setDialogOpen(false);
@@ -31,11 +33,15 @@ export function FormComp() {
     setloading(true);
     const book: BookModel = { Name, Book, Category };
     const response = await createBook(book)
+    setloading(false)
+    reset()
     if(response.status === 201){
-      setloading(false)
+      setTitle('Sucesso!')
+      setMessage('Livro cadastrado com sucesso!')
       setDialogOpen(true)
-      reset()
     }else{
+      setTitle('Oopss')
+      setMessage('Erro ao criar o livro')
       setloading(false)
     }
   };
@@ -130,7 +136,7 @@ export function FormComp() {
 
       {dialogOpen && (
         <div className="alert__container">
-          <AlertComponent handleClose={handleClose} />
+          <AlertComponent title={title} message={message} handleClose={handleClose} />
         </div>
       )}
     </div>
