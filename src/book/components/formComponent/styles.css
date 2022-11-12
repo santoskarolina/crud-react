@@ -1,0 +1,87 @@
+body {
+  background-color: #1c1c1c;
+  box-sizing: border-box;
+  font-size: 62, 5%;
+  font-family: "Noto Sans", sans-serif;
+}
+.App {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+}
+.container-wrapp {
+  background-color: #696969;
+  border-radius: 1.5rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+h1 {
+  color: #1c1c1c;
+  font-weight: bold;
+}
+input {
+  width: 20rem;
+  height: 2.5rem;
+  margin: 1rem 0;
+  border-radius: 0.5rem;
+  border: none;
+  outline: none;
+}
+
+input::placeholder {
+  color: #1c1c1cb7;
+  font-style: italic;
+}
+input:focus {
+  background-color: lightgray;
+}
+
+.box__button {
+  width: 20rem;
+  height: 3rem;
+  border: none;
+  font-weight: bold;
+  font-size: larger;
+  background-color: #d79413;
+  border-radius: 1rem;
+  color: #1c1c1c;
+  text-transform: uppercase;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.alert__container{
+  display: flex;
+    background-color: #012a4a87;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    align-items: center;
+    justify-content: center;
+    z-index: 19;
+    overflow: hidden;
+}
+
+.c-loader {
+  animation: is-rotating 1s infinite;
+  border: 5px solid #e5e5e5;
+  border-radius: 50%;
+  border-top-color: #011f20;
+  height: 20px;
+  width: 20px;
+}
+
+@keyframes is-rotating {
+  to {
+    transform: rotate(1turn);
+  }
+}
