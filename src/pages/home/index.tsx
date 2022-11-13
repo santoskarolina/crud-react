@@ -4,12 +4,12 @@ import "./style.css";
 import {LivroCard} from "../../book/components/livroCard"
 import { BookModel } from "models/book.model";
 import { Link } from "react-router-dom";
-import { getBooks } from "book/utils/getBooks";
 import { LoaderComponent } from "components/Loader";
 import { Dispatch } from "redux";
 import { useSelector, shallowEqual, useDispatch } from "react-redux";
 import { AplicationState } from "store/types";
 import { getBooksSucess, loadBookRequest } from "store/actions";
+import { getBooks } from "book/services/book.service";
 
 const HomePage = ()  =>{
   const loading = useSelector((state: AplicationState) => state.loading, shallowEqual);

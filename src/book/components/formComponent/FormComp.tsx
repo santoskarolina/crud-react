@@ -5,9 +5,9 @@ import { useState } from "react";
 import "./styles.css";
 import { useForm, } from "react-hook-form";
 import { AlertComponent } from "../../../components/alert";
-import { createBook } from "../../utils/createBook";
 import { BookModel } from "models/book.model";
 import { useNavigate } from "react-router-dom";
+import * as bookService from "book/services/book.service";
 
 interface MyInputTypes {
   name: string;
@@ -35,7 +35,7 @@ export function FormComp() {
   const postBook = async () => {
     setloading(true);
     const book: BookModel = { Name, Book, Category };
-    const response = await createBook(book)
+    const response = await bookService.createBook(book)
     setloading(false)
     reset()
     if(response.status === 201){

@@ -1,11 +1,10 @@
 import * as React from "react";
-import { deleteBook } from "book/utils/deleteBook";
 import { useDispatch } from 'react-redux'
 import { BookModel } from "models/book.model";
 import { Dispatch } from "react";
 import { getBooksSucess, loadBookRequest } from "store/actions";
-import { getBooks } from "book/utils/getBooks";
 import "./style.css";
+import * as bookService from "book/services/book.service";
 
 type Props = {
     book: BookModel;
@@ -16,9 +15,9 @@ export const LivroCard: React.FC<Props> = ({book}) => {
 
     const handleDeleteBook = async (id: any) => {
         dispatch(loadBookRequest());
-        return deleteBook(id)
+        return bookService.deleteBook(id)
         .then(() => {
-            getBooks().then(response => {
+            bookService.getBooks().then(response => {
                 dispatch(getBooksSucess(response.data))
             })
         })
