@@ -1,27 +1,36 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 import * as React from "react";
-import { useState } from "react";
+import { useState , useEffect} from "react";
 import "./styles.css";
-import { useForm, } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { AlertComponent } from "../../../components/alert";
 import { BookModel } from "models/book.model";
 import { useNavigate } from "react-router-dom";
 import * as bookService from "book/services/book.service";
+import { InputBoxComponent } from "../inputComponent";
+import { CustomMessages } from "models/messages";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { Dispatch } from "react";
+import { AplicationState } from "store/types";
+import { getBookByIdSucess, loadGetBookByIdRequest } from "store/actions";
+import { LoaderComponent } from "components/Loader";
 
-interface MyInputTypes {
+export interface MyInputTypes {
   name: string;
   book: string;
   category: string;
 }
 
-export function FormComp() {
+export function FormComp ({bookId}: any) {
+  const loadingBook = useSelector((state: AplicationState) => state.loadingBook, shallowEqual);
+  const dispatch: Dispatch<any> = useDispatch();
   const [Name, SetName] = useState("");
   const [Book, SetBook] = useState("");
   const [Category, SetCategory] = useState("");
   const [loading, setloading] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const { register, handleSubmit, formState: { errors }, reset} = useForm<MyInputTypes>();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<MyInputTypes>();
   const [title, setTitle] = useState("Atenção");
   const [message, setMessage] = useState("Aguardando resposta");
   const navigate = useNavigate();
@@ -31,98 +40,82 @@ export function FormComp() {
     setDialogOpen(false);
     navigate("/");
   }
+  
+  useEffect(() => {
+    const getBookById = async() => {
+      if(bookId){
+        dispatch(loadGetBookByIdRequest());
+        await bookService.getBookById(bookId)
+        .then(({data}) => {
+          const book: BookModel = data
+          handleUpdateForm(book)
+        })
+      }
+    }
+    const handleUpdateForm = (book: BookModel) => {
+      SetName(book.Name)
+      SetBook(book.Book)
+      SetCategory(book.Category)
+      dispatch(getBookByIdSucess(book))
+    }
+    getBookById()
+  }, [bookId,dispatch,])
 
   const postBook = async () => {
     setloading(true);
+    let response;
     const book: BookModel = { Name, Book, Category };
-    const response = await bookService.createBook(book)
-    setloading(false)
-    reset()
-    if(response.status === 201){
-      setTitle('Sucesso!')
-      setMessage('Livro cadastrado com sucesso!')
-      setDialogOpen(true)
+    if(bookId) {
+      response = await bookService.updateBook(bookId,book);
     }else{
-      setTitle('Oopss')
-      setMessage('Erro ao criar o livro')
-      setloading(false)
+      response = await bookService.createBook(book);
+    }
+    setloading(false);
+    reset();
+    if (response.status === 201 || response.status === 200) {
+      setTitle(CustomMessages.TITLE_OF_SUCCESS);
+      setMessage( response.status === 201 ? CustomMessages.REGISTERED_SUCCESSFULLY : 'Livro atualizado com sucesso');
+      setDialogOpen(true);
+    } else {
+      setTitle(CustomMessages.FAULT_TITLE);
+      setMessage(CustomMessages.FAILED_TO_REGISTER);
+      setloading(false);
     }
   };
 
   return (
     <div className="App">
+      {!loadingBook && (
       <form className="container-wrapp" onSubmit={handleSubmit(postBook)}>
-        <h1 className="title">Lista de Livros</h1>
+        <h1 className="title">{bookId ? 'Atualizar livro' : 'Novo livro'}</h1>
 
-        <input
-          type="text"
-          {...register("name", {
-            required: {
-              value: true,
-              message: 'Campo obrigátorio'
-            },
-            maxLength: {
-              value: 250,
-              message: "Nome deve ter entre 5 e 255 caracteres",
-            },
-            minLength: {
-              value: 5,
-              message: "Nome deve ter entre 5 e 255 caracteres",
-            },
-          })}
-          placeholder="Nome do livro"
-          className="input"
-          onChange={(e) => SetName(e.target.value)}
+        <InputBoxComponent
+          nome="Autor"
+          placeholder="Nome do autor"
+          value={Name}
+          register={register}
+          name={"name"}
+          errors={errors}
+          onChange={(value: any) => SetName(value.target.value)}
         />
-        {errors?.name && <span className="book__form__error">{errors.name.message}</span>}
-
-        <input
-          type="text"
-          {...register("book", {
-            required: {
-              value: true,
-              message: 'Campo obrigátorio'
-            },
-            maxLength: {
-              value: 250,
-              message: "Nome deve ter entre 5 e 255 caracteres",
-            },
-            minLength: {
-              value: 5,
-              message: "Nome deve ter entre 5 e 255 caracteres",
-            },
-          })}
+        <InputBoxComponent
+          nome="Livro"
+          value={Book}
           placeholder="Nome do livro"
-          className="input"
-          onChange={(e) => SetBook(e.target.value)}
+          register={register}
+          name={"book"}
+          errors={errors}
+          onChange={(value: any) => SetBook(value.target.value)}
         />
-        {errors.book && <span className="book__form__error">{errors.book.message}</span>}
-
-        <input
-          type="text"
-          {...register("category", {
-            required: {
-              value: true,
-              message: 'Campo obrigátorio'
-            },
-            maxLength: {
-              value: 250,
-              message: "Nome deve ter entre 5 e 255 caracteres",
-            },
-            minLength: {
-              value: 5,
-              message: "Nome deve ter entre 5 e 255 caracteres",
-            },
-          })}
+        <InputBoxComponent
+          nome="Categoria"
+          value={Category}
           placeholder="Categoria"
-          className="input"
-          onChange={(e) => SetCategory(e.target.value)}
+          register={register}
+          name={"category"}
+          errors={errors}
+          onChange={(value: any) => SetCategory(value.target.value)}
         />
-        {errors.category && <span className="book__form__error">{errors.category.message}</span>}
-
-        {/* 
-        button disabled={loading} style={{cursor: loading ? 'not-allowed' : 'pointer'}}>Style dinamico</button>
-        */}
 
         {!loading && (
           <button className="box__button" type="submit">
@@ -136,9 +129,20 @@ export function FormComp() {
           </div>
         )}
       </form>
+      )}
 
       {dialogOpen && (
-        <AlertComponent title={title} message={message} handleClose={handleClose} />
+        <AlertComponent
+          title={title}
+          message={message}
+          handleClose={handleClose}
+        />
+      )}
+
+    {loadingBook && (
+        <div className="loader__container">
+          <LoaderComponent />
+        </div>
       )}
     </div>
   );

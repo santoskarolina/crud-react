@@ -71,10 +71,11 @@ input:focus {
   }
 }
 
-.book__form__error{
-  font-size: 0.9rem;
-  text-align: left;
+
+.loader__container{
   width: 100%;
-  margin: 0;
-  color: white
+  height: calc(100% - 10rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

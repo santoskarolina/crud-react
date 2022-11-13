@@ -9,6 +9,7 @@ function App() {
         <Routes>
           <Route  path="/" element={<HomePage />}/>
           <Route path="/novo-livro"  element={<CreateBookPage />} />
+          <Route path="/atualizar-livro/:id" element={<CreateBookPage />} />
         </Routes>
     </div>
   );
