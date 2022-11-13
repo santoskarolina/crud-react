@@ -1,5 +1,5 @@
 // eslint-disable-next-line react-hooks/exhaustive-deps
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import "./style.css";
 import {LivroCard} from "../../book/components/livroCard"
 import { BookModel } from "models/book.model";
@@ -7,25 +7,22 @@ import { Link } from "react-router-dom";
 import { getBooks } from "book/utils/getBooks";
 import { LoaderComponent } from "components/Loader";
 import { Dispatch } from "redux";
-import { removeBookAction } from "contexts/actionsCreator";
 import { useSelector, shallowEqual, useDispatch } from "react-redux";
-import { StateCustom } from "contexts/types";
-import { connect } from "react-redux";
+import { AplicationState } from "store/types";
+import { getBooksSucess, loadBookRequest } from "store/actions";
 
 const HomePage = ()  =>{
-  const [Livros, setLivros] = useState([]);
-  const loading = useSelector((state: StateCustom) => state.loading, shallowEqual);
+  const loading = useSelector((state: AplicationState) => state.loading, shallowEqual);
+  const books = useSelector((state: AplicationState) => state.books, shallowEqual);
   const dispatch: Dispatch<any> = useDispatch()
   
   const getPosts = async () => {
-    console.log("🚀 ~ file: index.tsx ~ line 21 ~ getPosts", loading)
-    const response = await getBooks()
-    
-    if(response.status === 200) {
-      setLivros(response.data)
-      dispatch(removeBookAction(false))
-    }
-}
+    dispatch(loadBookRequest());
+    return getBooks()
+    .then(users => {
+      dispatch(getBooksSucess(users.data))
+    })
+  }
 
   useEffect(() => {
     getPosts()
@@ -40,7 +37,7 @@ const HomePage = ()  =>{
 
       {!loading && (
         <div className="livros__content">
-          {Livros.map((livro: BookModel) => {
+          {books.map((livro: BookModel) => {
             return (<LivroCard book={livro} key={livro.id} />
             )
           })}

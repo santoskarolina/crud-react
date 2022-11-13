@@ -1,5 +1,4 @@
 import { ResponseModel } from './../../models/response.mode';
-import { BookModel } from "../../models/book.model";
 import axios from "axios";
 
 export const deleteBook = async (id: number) => {
