@@ -72,19 +72,23 @@ export function FormComp ({bookId}: any) {
     }
     setloading(false);
     reset();
-    if (response.status === 201 || response.status === 200) {
+    handleRequestResponse(response.status)
+  };
+  
+  const handleRequestResponse = (status: number) => {
+    if (status === 201 || status === 200) {
       setTitle(CustomMessages.TITLE_OF_SUCCESS);
-      setMessage( response.status === 201 ? CustomMessages.REGISTERED_SUCCESSFULLY : 'Livro atualizado com sucesso');
+      setMessage(status === 201 ? CustomMessages.REGISTERED_SUCCESSFULLY : CustomMessages.SUCCESSFULLY_UPDATED);
       setDialogOpen(true);
     } else {
       setTitle(CustomMessages.FAULT_TITLE);
       setMessage(CustomMessages.FAILED_TO_REGISTER);
       setloading(false);
     }
-  };
+  }
 
   return (
-    <div className="App">
+    <div className="form__container">
       {!loadingBook && (
       <form className="container-wrapp" onSubmit={handleSubmit(postBook)}>
         <h1 className="title">{bookId ? 'Atualizar livro' : 'Novo livro'}</h1>

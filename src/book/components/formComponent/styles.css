@@ -1,16 +1,10 @@
-body {
-  background-color: #1c1c1c;
-  box-sizing: border-box;
-  font-size: 62, 5%;
-  font-family: "Noto Sans", sans-serif;
-}
-.App {
+
+.form__container {
   display: flex;
-  width: 100%;
-  height: 100%;
+  width: 24rem;
+  height: 28rem;
   justify-content: center;
-}
-.container-wrapp {
+
   background-color: #696969;
   border-radius: 1.5rem;
   padding: 1rem;
@@ -18,10 +12,7 @@ body {
   flex-direction: column;
   align-items: center;
 }
-h1 {
-  color: #1c1c1c;
-  font-weight: bold;
-}
+
 input {
   width: 20rem;
   height: 2.5rem;
