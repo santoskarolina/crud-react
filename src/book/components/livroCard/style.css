@@ -22,7 +22,9 @@
   }
   
   .livro__content__box{
-    padding: 0.9rem
+    padding: 0.9rem;
+    display: flex;
+    flex-direction: column;
   }
   
   .livro__box img{
@@ -34,4 +36,9 @@
     background-color: #eee;
     border-radius: 0.9rem;
     font-size: 0.8rem
+  }
+
+  .livro__button__delete{
+    margin-top: 1rem;
+    padding: 0.2rem 0.8rem;
   }

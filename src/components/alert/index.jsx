@@ -2,6 +2,7 @@ import React from "react";
 import "./styles.css";
 
 export const AlertComponent = ({handleClose, title, message}) => (
+  <div className="alert__container">
   <dialog className="alert__content" open>
     <div className="alert__header">
       <div onClick={handleClose}>
@@ -19,4 +20,5 @@ export const AlertComponent = ({handleClose, title, message}) => (
     </div>
 
   </dialog>
+  </div>
 );

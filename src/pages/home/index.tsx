@@ -1,19 +1,30 @@
 // eslint-disable-next-line react-hooks/exhaustive-deps
-import axios from "axios";
 import { useEffect, useState } from "react";
 import "./style.css";
 import {LivroCard} from "../../book/components/livroCard"
 import { BookModel } from "models/book.model";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { getBooks } from "book/utils/getBooks";
+import { LoaderComponent } from "components/Loader";
+import { Dispatch } from "redux";
+import { removeBookAction } from "contexts/actionsCreator";
+import { useSelector, shallowEqual, useDispatch } from "react-redux";
+import { StateCustom } from "contexts/types";
+import { connect } from "react-redux";
 
-export function HomePage() {
+const HomePage = ()  =>{
   const [Livros, setLivros] = useState([]);
-
-  const getPosts = () => {
-    axios.get(`https://636bda197f47ef51e13c1fe5.mockapi.io/api/v1/books`).then(response => {
-      const novosLivro = response.data
-      setLivros(novosLivro)
-    }).catch(err => console.log(err))
+  const loading = useSelector((state: StateCustom) => state.loading, shallowEqual);
+  const dispatch: Dispatch<any> = useDispatch()
+  
+  const getPosts = async () => {
+    console.log("🚀 ~ file: index.tsx ~ line 21 ~ getPosts", loading)
+    const response = await getBooks()
+    
+    if(response.status === 200) {
+      setLivros(response.data)
+      dispatch(removeBookAction(false))
+    }
 }
 
   useEffect(() => {
@@ -24,13 +35,25 @@ export function HomePage() {
     <div className="livros__container">
       <div className="livros__header">
       <h1>Livros Story</h1>
-      <Link to="/novo-livro" className="livros__button__nagivate">Home</Link>
+      <Link to="/novo-livro" className="livros__button__nagivate">Adicionar livro</Link>
       </div>
-    <div className="livros__content">
-         {Livros.map((livro: BookModel) => {
-          return (<LivroCard livro={livro} key={livro.id}/>)
-        })}
-    </div>
+
+      {!loading && (
+        <div className="livros__content">
+          {Livros.map((livro: BookModel) => {
+            return (<LivroCard book={livro} key={livro.id} />
+            )
+          })}
+        </div>
+      )}
+
+      {loading && (
+        <div className="loader__container">
+          <LoaderComponent />
+        </div>
+      )}
     </div>
   );
 }
+
+export default HomePage

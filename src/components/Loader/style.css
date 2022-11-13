@@ -1,0 +1,23 @@
+.loader__content {
+    animation: is-rotating 1s infinite;
+    border: 5px solid #e5e5e5;
+    border-radius: 50%;
+    border-top-color: #011f20;
+    height: 20px;
+    width: 20px;
+  }
+  
+  @keyframes is-rotating {
+    to {
+      transform: rotate(1turn);
+    }
+  }
+
+  .loader__container{
+    display: flex;
+    flex-direction: column;
+  }
+
+  .loader__container h1{
+    color: #fff
+  }

@@ -1,3 +1,18 @@
+.alert__container{
+  display: flex;
+    background-color: #012a4a87;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    align-items: center;
+    justify-content: center;
+    z-index: 19;
+    overflow: hidden;
+}
+
 .alert__content {
   height: 24rem;
   width: 24rem;

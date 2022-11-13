@@ -7,7 +7,7 @@ import { useForm, } from "react-hook-form";
 import { AlertComponent } from "../../../components/alert";
 import { createBook } from "../../utils/createBook";
 import { BookModel } from "models/book.model";
-
+import { useNavigate } from "react-router-dom";
 
 interface MyInputTypes {
   name: string;
@@ -22,14 +22,17 @@ export function FormComp() {
   const [loading, setloading] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const { register, handleSubmit, formState: { errors }, reset} = useForm<MyInputTypes>();
-  const [title, setTitle] = useState("");
-  const [message, setMessage] = useState("");
+  const [title, setTitle] = useState("Atenção");
+  const [message, setMessage] = useState("Aguardando resposta");
+  const navigate = useNavigate();
 
+  // close the alert
   function handleClose() {
     setDialogOpen(false);
+    navigate("/");
   }
 
-  const postData = async () => {
+  const postBook = async () => {
     setloading(true);
     const book: BookModel = { Name, Book, Category };
     const response = await createBook(book)
@@ -48,7 +51,7 @@ export function FormComp() {
 
   return (
     <div className="App">
-      <form className="container-wrapp" onSubmit={handleSubmit(postData)}>
+      <form className="container-wrapp" onSubmit={handleSubmit(postBook)}>
         <h1 className="title">Lista de Livros</h1>
 
         <input
@@ -71,7 +74,7 @@ export function FormComp() {
           className="input"
           onChange={(e) => SetName(e.target.value)}
         />
-        {errors?.name && <span>{errors.name.message}</span>}
+        {errors?.name && <span className="book__form__error">{errors.name.message}</span>}
 
         <input
           type="text"
@@ -93,7 +96,7 @@ export function FormComp() {
           className="input"
           onChange={(e) => SetBook(e.target.value)}
         />
-        {errors.book && <span>{errors.book.message}</span>}
+        {errors.book && <span className="book__form__error">{errors.book.message}</span>}
 
         <input
           type="text"
@@ -115,11 +118,11 @@ export function FormComp() {
           className="input"
           onChange={(e) => SetCategory(e.target.value)}
         />
-        {errors.category && <span>{errors.category.message}</span>}
+        {errors.category && <span className="book__form__error">{errors.category.message}</span>}
 
-        {/* {!loading && (
-          <button disabled={loading} style={{cursor: loading ? 'not-allowed' : 'pointer'}} className="box__button" onClick={PostData}>Adicionar!</button>
-        )} */}
+        {/* 
+        button disabled={loading} style={{cursor: loading ? 'not-allowed' : 'pointer'}}>Style dinamico</button>
+        */}
 
         {!loading && (
           <button className="box__button" type="submit">
@@ -129,15 +132,13 @@ export function FormComp() {
 
         {loading && (
           <div className="box__button">
-            <div className="c-loader"></div>
+            <div className="box__button__loader"></div>
           </div>
         )}
       </form>
 
       {dialogOpen && (
-        <div className="alert__container">
-          <AlertComponent title={title} message={message} handleClose={handleClose} />
-        </div>
+        <AlertComponent title={title} message={message} handleClose={handleClose} />
       )}
     </div>
   );
