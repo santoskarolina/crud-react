@@ -1,12 +1,13 @@
-import { GET_BOOK_SUCESS, GET_BOOK_REQUEST_ERROR, GET_BOOK_BY_ID_SUCESS } from './actions';
-import { BookModel } from '../models/book.model';
 import { Action } from 'redux';
+import { ActionsType } from './actionsType';
+import { BookModel } from '../models/book.model';
 
 export interface AplicationState{
     loading: boolean,
     loadingBook: boolean,
     books: BookModel[],
-    book: BookModel | null
+    book: BookModel | null,
+    filter: string
 }
 
 export interface LoadingState {
@@ -14,29 +15,36 @@ export interface LoadingState {
 }
 
 export interface LoadBooksRequest extends Action{
-    type: GET_BOOK_REQUEST
+    type: ActionsType.GET_BOOK_REQUEST
 }
 
 export interface loadBookSucess extends Action{
-    type: GET_BOOK_SUCESS
+    type: ActionsType.GET_BOOK_SUCESS
     books: BookModel[]
 }
 
 export interface LoadBooksRequestError extends Action{
-    type: GET_BOOK_REQUEST_ERROR
+    type: ActionsType.GET_BOOK_REQUEST_ERROR
 }
 export interface LoadBookByIdRequest extends Action{
-    type: GET_BOOK_BY_ID_REQUEST
+    type: ActionsType.GET_BOOK_BY_ID_REQUEST
 }
 
 export interface loadBookByIdSucess extends Action{
-    type: GET_BOOK_BY_ID_SUCESS
+    type: ActionsType.GET_BOOK_BY_ID_SUCESS
     book: BookModel
 }
+
+export interface LoadSetSearchBook extends Action{
+    type: ActionsType.REQUEST_SET_SEARCH__BOOK
+    filter: string
+}
+
 export interface GenericAction{
     type: string,
     books: BookModel[],
-    book: BookModel
+    book: BookModel,
+    filter: string
 }
 
 

@@ -36,7 +36,7 @@ export function FormComp ({bookId}: any) {
   const [Category, SetCategory] = useState(categoryOptions[0]);
 
   // close the alert
-  function handleClose() {
+  const handleClose = () =>{
     setDialogOpen(false);
     navigate("/");
   }
@@ -91,7 +91,7 @@ export function FormComp ({bookId}: any) {
     <div className="form__container">
       {!loadingBook && (
       <form className="container-wrapp" onSubmit={handleSubmit(postBook)}>
-        <h1 className="title">{bookId ? 'Atualizar livro' : 'Novo livro'}</h1>
+        <h1 className="form__title">{bookId ? 'Atualizar livro' : 'Novo livro'}</h1>
 
         <InputBoxComponent
           nome="Autor"

@@ -1,0 +1,33 @@
+.header__container{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+.header__content {
+    width: 90%;
+    display: flex;
+    height: 10rem;
+    padding: 0 0.8rem;
+    align-items: center;
+    justify-content: space-around
+  }
+  
+  .header__content h1 {
+    color: #fff
+  }
+  
+  .livros__button__nagivate{
+    text-decoration: none;
+    color: #fff;
+    border-radius: 0.4rem;
+    padding: 0.4rem 0.9rem;
+    cursor: pointer;
+    background-color: rgb(175, 99, 12);
+    color: #fff
+  }
+
+  .header__search__container{
+    width: 50%;
+  }

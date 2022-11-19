@@ -17,6 +17,11 @@ export const getBooks = async () => {
     return response
 }
 
+export const serachBook = async (name: string) => {
+    let response = await axios.get(`${Environments.BASE_URL}`, {params: {Book: name}})
+    return response
+}
+
 export const getBookById = async (id: number) => {
     let response = await axios.get(`${Environments.BASE_URL}/${id}`)
     return response

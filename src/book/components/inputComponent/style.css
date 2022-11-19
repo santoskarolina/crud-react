@@ -12,7 +12,7 @@
     flex-direction: column;
   }
 
-  input {
+  .box__form__field {
     width: 20rem;
     height: 2.5rem;
     margin: 1rem 0;
@@ -21,10 +21,11 @@
     outline: none;
   }
   
-  input::placeholder {
+  .box__form__field::placeholder {
     color: #1c1c1cb7;
     font-style: italic;
   }
-  input:focus {
+  
+  .box__form__field:focus {
     background-color: lightgray;
   }

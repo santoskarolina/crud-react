@@ -6,7 +6,8 @@ export const initialState : AplicationState = {
   loading: true, 
   loadingBook: false,
   books: [],
-  book: null
+  book: null,
+  filter: ''
 }
 
 const reducer = (state = initialState, action: GenericAction ) => {
@@ -42,7 +43,12 @@ const reducer = (state = initialState, action: GenericAction ) => {
     });
   }
 
+  if(action.type === ActionsType.REQUEST_SET_SEARCH__BOOK){
+    return produce(state, draft => {
+      draft.filter = action.filter;
+    });
 
+  }
     return state
   }
 

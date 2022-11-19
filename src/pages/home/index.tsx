@@ -2,7 +2,6 @@
 import { useEffect } from "react";
 import {LivroCard} from "../../book/components/livroCard"
 import { BookModel } from "models/book.model";
-import { Link } from "react-router-dom";
 import { LoaderComponent } from "components/Loader";
 import { Dispatch } from "redux";
 import { useSelector, shallowEqual, useDispatch } from "react-redux";
@@ -10,6 +9,7 @@ import { AplicationState } from "store/types";
 import { getBooksSucess, loadBookRequest, loadBookRequestError } from "store/actions";
 import { getBooks } from "book/services/book.service";
 import "./style.css";
+import { HeaderComponent } from "components/headerComp";
 
 const HomePage = ()  =>{
   const loading = useSelector((state: AplicationState) => state.loading, shallowEqual);
@@ -31,11 +31,7 @@ const HomePage = ()  =>{
 
   return (
     <div className="livros__container">
-      <div className="livros__header">
-      <h1>Livros Story</h1>
-      <Link to="/novo-livro" className="livros__button__nagivate">Adicionar livro</Link>
-      </div>
-
+     <HeaderComponent />
       {!loading && (
         <div className="livros__content">
           {books.map((livro: BookModel) => {

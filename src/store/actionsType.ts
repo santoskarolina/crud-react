@@ -5,4 +5,8 @@ export class ActionsType{
      public static readonly  GET_BOOK_REQUEST_ERROR = 'GET_BOOK_REQUEST_ERROR'
      public static readonly  GET_BOOK_BY_ID_REQUEST = 'GET_BOOK_BY_ID_REQUEST'
      public static readonly  GET_BOOK_BY_ID_SUCESS = 'GET_BOOK_BY_ID_SUCESS'
+
+     // SERCH BOOK ACTIONS
+     public static readonly REQUEST_SET_SEARCH__BOOK = 'REQUEST_SET_SEARCH__BOOK'
+     
 }

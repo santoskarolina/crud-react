@@ -5,4 +5,5 @@ export const categoryOptions: string[] = [
   'Aventura',
   'Comédia',
   'Romance',
+  'Musical'
 ]

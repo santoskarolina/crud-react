@@ -17,6 +17,7 @@ export const InputBoxComponent = (props: Props) => {
         <div className="box__form__container">
 
             <input
+            className="box__form__field"
                 placeholder={placeholder}
                 type="text"
                 value={value}
