@@ -1,5 +1,3 @@
-
-
 .livro__title{
     font-weight: bold;
   }
@@ -8,17 +6,15 @@
     margin: 0.3rem;
     background-color: #fff;
     border-radius: 0.8rem;
+
+    width: 16rem;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-  
     transition: transform 220ms ease-in-out;
-
     border-radius: 1rem;
+    overflow: hidden;
 
-    overflow: hidden
-  }
-  
-  .livro__box:hover{
-    transform: scale(1.05);
+
+    display: flex;
   }
   
   .livro__content__box{
@@ -32,13 +28,43 @@
   }
 
   .livro__category{
-    padding: 0.6rem;
-    background-color: #eee;
-    border-radius: 0.9rem;
-    font-size: 0.8rem
+    font-size: 0.8rem;
+    width: 8rem;
+    margin: 0
+  }
+
+  .livro__actions{
+    width: 8rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .livro__button{
+    margin-top: 1rem;
+    border-radius: 1rem;
+    cursor: pointer;
+    border: none;
+    height: 2rem;
+    width: 2rem
+  }
+
+  .livro__button img{
+    width:  2rem;
   }
 
   .livro__button__delete{
-    margin-top: 1rem;
-    padding: 0.2rem 0.8rem;
+    background-color: rgb(196, 84, 84);
+  }
+
+  .livro__button__update{
+    background-color: rgb(134, 134, 230)
+  }
+
+  .livro__footer{
+    display: flex;
+    width: 90%;
+    border-top: 1px solid rgb(83, 78, 78);
+    justify-content: space-between;
+    align-items: center;
   }

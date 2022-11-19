@@ -13,23 +13,6 @@
   align-items: center;
 }
 
-input {
-  width: 20rem;
-  height: 2.5rem;
-  margin: 1rem 0;
-  border-radius: 0.5rem;
-  border: none;
-  outline: none;
-}
-
-input::placeholder {
-  color: #1c1c1cb7;
-  font-style: italic;
-}
-input:focus {
-  background-color: lightgray;
-}
-
 .box__button {
   width: 20rem;
   height: 3rem;

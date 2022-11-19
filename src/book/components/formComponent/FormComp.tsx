@@ -15,19 +15,14 @@ import { Dispatch } from "react";
 import { AplicationState } from "store/types";
 import { getBookByIdSucess, loadGetBookByIdRequest } from "store/actions";
 import { LoaderComponent } from "components/Loader";
+import { MyInputTypes } from "models/inputTypes.model";
+import { InputSelectBoxComponent } from "../inputSelectComp";
+import { categoryOptions } from "../../../models/category.options";
 
-export interface MyInputTypes {
-  name: string;
-  book: string;
-  category: string;
-}
 
 export function FormComp ({bookId}: any) {
   const loadingBook = useSelector((state: AplicationState) => state.loadingBook, shallowEqual);
   const dispatch: Dispatch<any> = useDispatch();
-  const [Name, SetName] = useState("");
-  const [Book, SetBook] = useState("");
-  const [Category, SetCategory] = useState("");
   const [loading, setloading] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const { register, handleSubmit, formState: { errors }, reset } = useForm<MyInputTypes>();
@@ -35,12 +30,17 @@ export function FormComp ({bookId}: any) {
   const [message, setMessage] = useState("Aguardando resposta");
   const navigate = useNavigate();
 
+  // form fields
+  const [Name, SetName] = useState("");
+  const [Book, SetBook] = useState("");
+  const [Category, SetCategory] = useState(categoryOptions[0]);
+
   // close the alert
   function handleClose() {
     setDialogOpen(false);
     navigate("/");
   }
-  
+
   useEffect(() => {
     const getBookById = async() => {
       if(bookId){
@@ -66,7 +66,7 @@ export function FormComp ({bookId}: any) {
     let response;
     const book: BookModel = { Name, Book, Category };
     if(bookId) {
-      response = await bookService.updateBook(bookId,book);
+      response = await bookService.updateBook(bookId,book)
     }else{
       response = await bookService.createBook(book);
     }
@@ -102,6 +102,7 @@ export function FormComp ({bookId}: any) {
           errors={errors}
           onChange={(value: any) => SetName(value.target.value)}
         />
+
         <InputBoxComponent
           nome="Livro"
           value={Book}
@@ -111,10 +112,9 @@ export function FormComp ({bookId}: any) {
           errors={errors}
           onChange={(value: any) => SetBook(value.target.value)}
         />
-        <InputBoxComponent
-          nome="Categoria"
+        
+        <InputSelectBoxComponent 
           value={Category}
-          placeholder="Categoria"
           register={register}
           name={"category"}
           errors={errors}
