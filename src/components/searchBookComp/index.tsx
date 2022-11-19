@@ -2,9 +2,8 @@ import "./style.css";
 import * as React from "react";
 import { useState } from "react";
 import { serachBook } from "book/services/book.service";
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { getBooksSucess, loadBookRequest, loadBookRequestError, loadSetSearchBook } from "store/actions";
-import { AplicationState } from "store/types";
+import { useDispatch} from "react-redux";
+import { getBooksSucess, loadBookRequest, loadBookRequestError} from "store/actions";
 import { Dispatch } from "redux";
 import { useEffect } from "react";
 
@@ -13,16 +12,14 @@ class KeyCode {
 }
 
 export const SearchBook = () => {
-    const [name, setName] = useState('')
     const [nameFilter, setNameFilter] = useState('')
-    const filter = useSelector((state: AplicationState) => state.filter, shallowEqual);
+    const [name, setName] = useState('')
     const dispatch: Dispatch<any> = useDispatch()
-
+    
     useEffect(() => {
-        async function getPosts() {
+        function getPosts() {
                 dispatch(loadBookRequest());
-                dispatch(loadSetSearchBook(nameFilter))
-                return await serachBook(nameFilter)
+                return serachBook(nameFilter)
                     .then(response => {
                         dispatch(getBooksSucess(response.data))
                     }).catch(() => {
@@ -30,7 +27,7 @@ export const SearchBook = () => {
                     })
             }
         getPosts()
-    }, [dispatch, filter, nameFilter])
+    }, [dispatch, nameFilter])
 
     const handleClear = () => {
         setName('')
@@ -38,11 +35,12 @@ export const SearchBook = () => {
     }
 
     const handleSearch = () => {
-        if(name !== '') setNameFilter(name)
+        if(name !== '') {
+            setNameFilter(name)}
     }
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.code === KeyCode.ENTER) handleSearch()
+        if (event.code === KeyCode.ENTER && name !== '') setNameFilter(name)
     }
 
     return (

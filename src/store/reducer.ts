@@ -42,13 +42,6 @@ const reducer = (state = initialState, action: GenericAction ) => {
       draft.book = action.book;
     });
   }
-
-  if(action.type === ActionsType.REQUEST_SET_SEARCH__BOOK){
-    return produce(state, draft => {
-      draft.filter = action.filter;
-    });
-
-  }
     return state
   }
 

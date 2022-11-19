@@ -35,16 +35,10 @@ export interface loadBookByIdSucess extends Action{
     book: BookModel
 }
 
-export interface LoadSetSearchBook extends Action{
-    type: ActionsType.REQUEST_SET_SEARCH__BOOK
-    filter: string
-}
-
 export interface GenericAction{
     type: string,
     books: BookModel[],
     book: BookModel,
-    filter: string
 }
 
 

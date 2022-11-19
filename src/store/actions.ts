@@ -1,5 +1,5 @@
 import { ActionsType } from './actionsType';
-import { LoadBooksRequestError, LoadBookByIdRequest, loadBookByIdSucess, LoadSetSearchBook } from './types.d';
+import { LoadBooksRequestError, LoadBookByIdRequest, loadBookByIdSucess} from './types.d';
 import { BookModel } from "models/book.model"
 import { LoadBooksRequest, loadBookSucess } from "./types"
 
@@ -28,9 +28,4 @@ export const loadGetBookByIdRequest = (): LoadBookByIdRequest => ({
 export const getBookByIdSucess = (book: BookModel): loadBookByIdSucess => ({
   type: ActionsType.GET_BOOK_BY_ID_SUCESS,
   book
-})
-
-export const loadSetSearchBook = (filter: string): LoadSetSearchBook => ({
-  type: ActionsType.REQUEST_SET_SEARCH__BOOK,
-  filter
 })
